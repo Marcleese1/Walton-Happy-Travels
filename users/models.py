@@ -1,3 +1,13 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
+
+class Customer(AbstractUser):
+    email = models.EmailField(blank=False, unique=True)
+    name = models.CharField(blank=True, max_length=255)
+    Address_Line_1 = models.CharField(blank=True, max_length=255)
+    Address_Line_2 = models.CharField(blank=True, max_length=255)
+    town = models.CharField(blank=True, max_length=50)
+    postCode = models.CharField(blank=True,max_length=8)
+    PhoneNumber = models.CharField(blank=True, max_length=15)
+    homePhone = models.CharField(blank=True,max_length=15)
