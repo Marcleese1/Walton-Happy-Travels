@@ -8,7 +8,7 @@ class CustomerCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Customer
-        fields = ('email', 'name')
+        fields = ('email', 'FirstName', 'LastName')
 
 
 class CustomerChangeForm(UserChangeForm):
