@@ -12,7 +12,11 @@ class Customer(AbstractUser):
     postCode = models.CharField(blank=True,max_length=8)
     PhoneNumber = models.CharField(blank=True, max_length=15)
     homePhone = models.CharField(blank=True,max_length=15)
-    
+
     def __str__(self):
         return self.email
 
+
+class Staff(AbstractUser):
+    FirstName = models.CharField(blank=True, max_length=255)
+    LastName = models.CharField(blank=True, max_length=255)
