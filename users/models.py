@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+#from bookings import Bookings
+import uuid
 
 
 class Manager(BaseUserManager):
@@ -14,12 +16,12 @@ class Manager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self,email,password=None, **extra_fields):
-        Extra_fields.setdefault('is_staff',False)
-        Extra_fields.setdefault('is_superuser',False)
-        return self._create_user(email,password,**extra_fields)
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self,email,password,**extra_fields):
+    def create_superuser(self,email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -28,10 +30,14 @@ class Manager(BaseUserManager):
         if extra_fields.get('is_superuser')is not True:
             raise ValueError('Superuser must have is_superuser=True')
 
-        return self._create_user(email,password,**extra_fields)
+        return self._create_user(email, password, **extra_fields)
 
+
+#class User(AbstractUser):
+    #bookingList = [Bookings]
 
 class Customer(AbstractUser):
+    ID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(blank=False, unique=True)
     password = models.TextField(max_length=100, default="")
     is_staff = models.BooleanField(
@@ -50,6 +56,7 @@ class Customer(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = Manager()
+    #objects = User
 
     def __str__(self):
         return self.email
