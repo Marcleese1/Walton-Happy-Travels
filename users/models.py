@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-#from bookings import Bookings
-import uuid
+from bookings.models import Bookings
 
 
 class Manager(BaseUserManager):
@@ -33,32 +32,30 @@ class Manager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-#class User(AbstractUser):
-    #bookingList = [Bookings]
+class User:
+
+    bookingList = [Bookings]
+
 
 class Customer(AbstractUser):
-    ID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(blank=False, unique=True)
     password = models.TextField(max_length=100, default="")
     is_staff = models.BooleanField(
         default=False,
         help_text='Designates whether the user can log into this site.')
-    FirstName = models.CharField(blank=True, max_length=255)
-    LastName = models.CharField(blank=True, max_length=255)
     Address_Line_1 = models.CharField(blank=True, max_length=255)
     Address_Line_2 = models.CharField(blank=True, max_length=255)
     town = models.CharField(blank=True, max_length=50)
-    postCode = models.CharField(blank=True,max_length=8)
+    postCode = models.CharField(blank=True, max_length=8)
     PhoneNumber = models.CharField(blank=True, max_length=15)
-    homePhone = models.CharField(blank=True,max_length=15)
+    homePhone = models.CharField(blank=True, max_length=15)
     username = None
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = Manager()
-    #objects = User
 
-    def __str__(self):
+    def get_username(self):
         return self.email
 
 

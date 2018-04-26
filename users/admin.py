@@ -11,8 +11,9 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomerCreationForm
     form = CustomerChangeForm
     model = Customer
-    list_display = ['email', 'FirstName', 'LastName']
+    list_display = ['id', 'email', 'password', 'Address_Line_1', 'Address_Line_2', 'postCode', 'PhoneNumber']
 
+    ordering = ('email',)
 
 admin.site.register(Customer, CustomUserAdmin)
 
