@@ -5,7 +5,8 @@
 
 {% block content %}
   <h2>Sign up</h2>
-  <form method="post">
+  <form method="Post">
+    {{ form }}
     {% csrf_token %}
     <button class="btn btn-success" type="submit">Sign up</button>
   </form>

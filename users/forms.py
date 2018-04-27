@@ -24,6 +24,20 @@ class CustomerCreationForm(UserCreationForm):
         return customer
 
 
+class UserCustomerForm(UserCreationForm):
+    error_messages = {
+        'password_mismatch': "The two password fields didn't match.",
+    }
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput,
+                                help_text="Enter the same password as above, for verification.")
+
+    class Meta:
+        model = Customer
+        fields = ('email', 'password1', 'password2','FirstName', 'LastName', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', 'homePhone',
+                  'PhoneNumber')
+
+
 class CustomerChangeForm(UserChangeForm):
     class Meta:
         model = Customer

@@ -40,6 +40,8 @@ class User:
 class Customer(AbstractUser):
     email = models.EmailField(blank=False, unique=True)
     password = models.TextField(max_length=100, default="")
+    FirstName = models.TextField(blank=True, max_length=40)
+    LastName = models.TextField(blank=True, max_length=40)
     is_staff = models.BooleanField(
         default=False,
         help_text='Designates whether the user can log into this site.')

@@ -7,7 +7,7 @@ from payments.models import Payment
 
 class Bookings(models.Model):
 
-    userId = models.ForeignKey('Customer', blank=False, on_delete=models.CASCADE())
+    userId = models.ForeignKey('Customer', blank=False, on_delete=models.CASCADE)
     #customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
     BookingId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bookingDate = models.DateTimeField(default=timezone.now)
@@ -18,10 +18,14 @@ class Bookings(models.Model):
 
 class BookingLine(models.Model):
     BookingLineId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    departureDate = models.DateTimeField(default=timezone.now())
+    departureDate = models.DateTimeField(timezone.now())
+    arrivalDate = models.DateTimeField(timezone.now())
 
 
 class Trip(models.Model):
     tripId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    
-
+    destination = models.CharField(max_length=200)
+    duration = models.TextField(BookingLine.departureDate - BookingLine.arrivalDate)
+    price = models.CharField(max_length=10)
+    totalCost = models.CharField(price)
+    hotelName = models.CharField(max_length=100)
