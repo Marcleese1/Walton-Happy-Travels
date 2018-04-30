@@ -34,7 +34,7 @@ class UserCustomerForm(UserCreationForm):
 
     class Meta:
         model = Customer
-        fields = ('email', 'password1', 'password2','FirstName', 'LastName', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', 'homePhone',
+        fields = ('email', 'password1', 'password2', 'FirstName', 'LastName', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', 'homePhone',
                   'PhoneNumber')
 
 

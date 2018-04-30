@@ -6,5 +6,5 @@ class Payment(models.Model):
     expiry = models.DateField(max_length=5)
     security_Code = models.TextField(max_length=4)
     Deposit = models.BooleanField(default=False)
-
+    Deposit_Amount = models.IntegerField()
 
