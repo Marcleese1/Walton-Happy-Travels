@@ -18,11 +18,11 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    #path('', TemplateView.as_view(template_name='home.html')),
     path('', include('bookings.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('users/', include('users.urls')),
-    path('users/', include('django.contrib.auth.urls')),
     path('bookings/', include('bookings.urls')),
-    path('bookings/', include('django.contrib.auth.urls')),
+    path('packages/', include('packages.urls')),
+
 ]

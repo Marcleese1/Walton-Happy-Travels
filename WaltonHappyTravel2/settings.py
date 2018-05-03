@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_SECRET_KEY", "pk_test_xODHdaU2iyDQOXHZskbAC47s")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_QzgUSPfkhpfLey51vqStbfXg")
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'users',
     'bookings',
     'payments',
+    'packages',
 ]
 
 MIDDLEWARE = [

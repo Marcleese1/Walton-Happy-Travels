@@ -1,0 +1,20 @@
+<!-- templates/signup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+  <h2>Payment Details</h2>
+  <form action="{% url 'checkout' %}" method="post">
+  {% csrf_token %}
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_xODHdaU2iyDQOXHZskbAC47s"
+          data-amount="200000"
+          data-name="WaltonHappyTravel2"
+          data-description="package"
+          data-currency="gbp">
+  </script>
+
+  </form>
+
+{% endblock %}

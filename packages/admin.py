@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from.import models
+
+
+class Package(admin.ModelAdmin):
+    model = models.Packages
+
+
+admin.site.register(models.Packages)
