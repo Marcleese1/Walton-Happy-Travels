@@ -48,3 +48,5 @@ class CustomerChangeForm(UserChangeForm):
         f = self.fields.get('user_permissions', None)
         if f is not None:
             f.queryset = f.queryset.select_related('content_type')
+
+

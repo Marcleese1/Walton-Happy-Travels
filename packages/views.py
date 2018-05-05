@@ -6,11 +6,9 @@ import stripe
 from WaltonHappyTravel2 import settings
 from bookings.models import Bookings
 from django.shortcuts import redirect, render
-from .forms import newPackageForm
-from .models import Packages
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+import payments
+from django.urls import reverse_lazy
+
 
 class ViewPackages(ListView):
     model = models.Packages
@@ -21,7 +19,8 @@ class PackageCreateView(LoginRequiredMixin, CreateView):
     model = models.Packages
     template_name = 'package_new.html'
     fields = ['destination', 'hotelName', 'duration', 'price']
-    login_url = 'login'''
+    login_url = 'login'
+    success_url = reverse_lazy('home')
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -29,18 +28,18 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def checkout(request):
     new_booking = Bookings(
-        BookingId=Bookings.BookingId,
-        bookingDate=Bookings.bookingDate,
-        bookingType=Bookings.bookingType,
-        bookingPayment=Bookings.bookingPayment,
-        bookingDeposit=Bookings.bookingDeposit
+        BookingId="",
+        bookingDate="",
+        bookingType="",
+        bookingPayment="",
+        bookingDeposit=""
     )
     if request.method == "POST":
         token = request.POST.get("stripeToken")
 
         try:
             charge = stripe.Charge.create(
-                amount=2000,
+                amount=200000,
                 currency="gbp",
                 source=token,
                 description="The Booking has been made"

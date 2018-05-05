@@ -59,5 +59,3 @@ class Customer(AbstractUser):
 
     def get_username(self):
         return self.email
-
-
