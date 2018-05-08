@@ -23,7 +23,7 @@ class PackageCreateView(LoginRequiredMixin, CreateView):
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-
+# function used for the checkout this funtction creates the booking ID the Date and how much is costs.
 def checkout(request):
     new_booking = Bookings(
         BookingId="a2dca2be49674e46aa9ccdd76eadf699",

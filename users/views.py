@@ -11,3 +11,17 @@ class SignUp(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
+
+def delete_user(request, email):
+    context = {}
+
+    try:
+        u = Customer.objects.get(email = email)
+        u. delete()
+        context['msg'] = 'The User is Deleted'
+    except Customer.DoesNotExist:
+        context['msg'] = 'User does not exist.'
+    except Exception as e:
+        context['msg'] = e.message
+
+    return render(request, 'home.html', context=context)
