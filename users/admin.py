@@ -2,19 +2,32 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomerCreationForm, CustomerChangeForm
+from .forms import CustomerCreationFormAdmin, CustomerChangeFormAdmin
 from .models import Customer
 
 
 class CustomUserAdmin(UserAdmin):
-    add_form = CustomerCreationForm
-    form = CustomerChangeForm
+    add_form = CustomerCreationFormAdmin
+    form = CustomerChangeFormAdmin
     model = Customer
-    list_display = ['id', 'email', 'password', 'Address_Line_1', 'Address_Line_2', 'postCode', 'PhoneNumber']
-
+    list_display = ['email', 'password', 'Address_Line_1', 'Address_Line_2', 'postCode', 'PhoneNumber']
+    fieldsets = (
+        (None,
+         {'fields': ('email', 'password', 'date_joined')}),
+        ('Personal info',
+         {'fields': ('first_name', 'last_name', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', 'PhoneNumber')}),
+        ('Permissions',
+         {'fields': ('is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode',
+                       'PhoneNumber', 'homePhone')}
+         ),
+    )
+    search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
-
-
 
 
 admin.site.register(Customer, CustomUserAdmin)
