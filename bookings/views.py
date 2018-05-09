@@ -14,13 +14,13 @@ def edit(request):
     if request.method == 'post':
         form = CustomerChangeFormAdmin(request.POST)
         if form.is_valid():
-            cust = Customer.objects.get(email=request.Customer.email, first_name=request.Customer.FirstName,
-                                        last_name=request.Customer.LastName,
-                                        address_line1=request.Customer.Address_Line_1,
-                                        address_line2=request.Customer.Address_Line_2,
-                                        postcode=request.Customer.postcode,
-                                        town=request.Customer.town, homePhone=request.Customer.homePhone,
-                                        PhoneNumber=request.Customer.PhoneNumber)
+            cust = Customer.objects.get(email=request.user.email, first_name=request.user.FirstName,
+                                        last_name=request.user.LastName,
+                                        address_line1=request.user.Address_Line_1,
+                                        address_line2=request.user.Address_Line_2,
+                                        postcode=request.user.postcode,
+                                        town=request.user.town, homePhone=request.user.homePhone,
+                                        PhoneNumber=request.user.PhoneNumber)
             return redirect('home')
     else:
         form = CustomerChangeFormAdmin()

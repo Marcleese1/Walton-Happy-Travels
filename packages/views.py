@@ -24,20 +24,21 @@ class PackageCreateView(LoginRequiredMixin, CreateView):
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # function used for the checkout this funtction creates the booking ID the Date and how much is costs.
+
+
 def checkout(request):
     new_booking = Bookings(
-        BookingId="a2dca2be49674e46aa9ccdd76eadf699",
-        bookingDate="2018-05-03",
-        bookingType="Flight",
-        bookingPayment="200000",
-        bookingDeposit="0"
+        bookingDate=request.session['bookingDate'],
+        bookingType=request.session['bookingType'],
+        bookingPayment=request.session['bookingPayment'],
+        bookingDeposit=request.session['bookingDeposit']
     )
     if request.method == "POST":
         token = request.POST.get("stripeToken")
 
         try:
             charge = stripe.Charge.create(
-                amount=2000,
+                amount=request.session['bookingPayment'],
                 currency="gbp",
                 source=token,
                 description="The Booking has been made"
