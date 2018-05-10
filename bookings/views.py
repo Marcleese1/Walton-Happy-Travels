@@ -2,7 +2,6 @@ from django.views.generic import TemplateView
 from users.models import Customer
 from users.views import CustomerChangeFormAdmin
 from django.shortcuts import render, redirect
-from .forms import EditForm
 
 
 class HomePageView(TemplateView):
@@ -25,3 +24,6 @@ def edit(request):
     else:
         form = CustomerChangeFormAdmin()
     return render(request, 'editdetails.html', {'form':form})
+
+
+#def ViewPreviousBookings(request, id):

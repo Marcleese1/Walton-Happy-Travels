@@ -6,16 +6,17 @@
 {% block content %}
   {% for post in object_list %}
     <div class="card">
-     <span class="font-weight-bold">{{ post.destination }}</span>
+     <span class="font-weight-bold">{{ "Destination: " }}{{ post.destination }}</span>
       <div class="card-body">
-      <p>{{ post.hotelName }}</p>
-      <p>{{ post.duration }}</p>
-      <p>{{ post.price }}</p>
-        {% if user.is_authenticated %}
-        <a href="{% url 'payment' %}">Buy</a>
-        {% else %}
-            <a href="{% url 'login' %}">Buy</a>
-        {% endif %}
+      <p>{{ "Hotel Name: " }}{{ post.hotelName }}</p>
+      <p>{{ "Duration: " }}{{ post.duration }}</p>
+      <p>{{ "Price: £" }}{{ post.price }}{{ " PP" }}</p>
+      <p>{{ "Seats Available: " }}{{post.Quantity }}</p>
+         {% if user.is_authenticated %}
+        <a href="{% url 'payment' %}">View Package</a>
+         {% else %}
+        <a href="{% url 'login' %}">Buy</a>
+         {% endif %}
       </div>
     </div>
     <br />

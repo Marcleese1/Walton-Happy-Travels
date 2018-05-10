@@ -17,12 +17,13 @@ class CustomUserAdmin(UserAdmin):
         ('Personal info',
          {'fields': ('first_name', 'last_name', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', 'PhoneNumber')}),
         ('Permissions',
-         {'fields': ('is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+         {'fields': ('is_staff', 'is_superuser','is_active', 'groups', 'user_permissions')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode',
+            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active', 'Address_Line_1', 'Address_Line_2',
+                       'town', 'postCode',
                        'PhoneNumber', 'homePhone')}
          ),
     )

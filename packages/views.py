@@ -28,10 +28,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def checkout(request):
     new_booking = Bookings(
-        bookingDate=request.session['bookingDate'],
-        bookingType=request.session['bookingType'],
-        bookingPayment=request.session['bookingPayment'],
-        bookingDeposit=request.session['bookingDeposit']
+        bookingDate="",
+        bookingType="",
+        bookingDeposit="",
+        Quantity="",
     )
     if request.method == "POST":
         token = request.POST.get("stripeToken")
