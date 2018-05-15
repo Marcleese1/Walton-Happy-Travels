@@ -6,7 +6,8 @@ from payments.models import Payment
 
 class Bookings(models.Model):
 
-    customer = models.ForeignKey('users.Customer', on_delete=models.CASCADE, default=True)
+    customer = models.ForeignKey('users.Customer', verbose_name='Customer', on_delete=models.CASCADE, default=True,
+                                 related_name='bookings')
     BookingId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bookingDate = models.DateTimeField(default=timezone.now)
     bookingType = models.CharField(blank=False, max_length=50)

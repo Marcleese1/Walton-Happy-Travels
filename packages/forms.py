@@ -8,3 +8,5 @@ class NewPackageForm(UserCreationForm):
     class Meta:
         model = Packages
         fields = ('destination', 'hotelName', 'price', 'duration')
+
+

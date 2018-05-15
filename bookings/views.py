@@ -1,7 +1,17 @@
-from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView, ListView, DetailView
 from users.models import Customer
 from users.views import CustomerChangeFormAdmin
 from django.shortcuts import render, redirect
+from .forms import BookingForm
+from.models import Bookings
+from django.http import Http404
+
+
+class BookingViewMixin(object):
+    model = Bookings
+    form_class = BookingForm
 
 
 class HomePageView(TemplateView):
@@ -26,4 +36,27 @@ def edit(request):
     return render(request, 'editdetails.html', {'form':form})
 
 
-#def ViewPreviousBookings(request, id):
+class BookingDetailView(BookingViewMixin, DetailView):
+    def dispatch(self, request, *args, **kwargs):
+        self.kwargs = kwargs
+        self.object = self.get_object()
+        if request.user.is_authenticated():
+
+            if not self.object.user == request.user:
+                raise Http404
+            else:
+                session = self.object.session
+                if(not session or not request.session.session_key or session.session_key !=
+                        request.session.session_key):
+                    raise Http404
+            return super(BookingViewMixin,self).dispatch(request, *args, **kwargs)
+
+
+class BookingListView(BookingViewMixin, ListView):
+    """View to display all ``Booking`` instances of one user."""
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(BookingViewMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return self.request.user.bookings.all()

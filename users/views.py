@@ -12,6 +12,7 @@ from setuptools import setup
 
 version=__import__('social_auth').__version__
 
+
 class SignUp(generic.CreateView):
     form_class = UserCustomerForm
     success_url = reverse_lazy('login')
