@@ -1,13 +1,63 @@
-{% extends "base.html" %}
-{% load i18n %}
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+{% block content %}
+    <form>
 
-{% block title %}{% trans "My bookings" %}{% endblock %}
+    </form>
+  <h2>View Bookings</h2>
+{% csrf_token %}
+  <p>
+    <table>
+        <tr>
+            <th><h3>User, </h3></th>
+            <th><h3>Date Booked, </h3></th>
+            <th><h3>Booking Type, </h3></th>
+        </tr>
+ {% for item in query_results %}
+        <tr>
+            <td>
+                {{ item.user }}{{ ", " }}
+                {% if item.help_text %}
+                    <small style="color: grey">{{ item.help_text }}</small>
+                {% endif %}
+                {% for error in item.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </td>
+            <td>
+                {{ item.bookingDate }}{{ ", " }}
+                {% if item.help_text %}
+                  <small style="color: grey">{{ item.help_text }}</small>
+                {% endif %}
+                {% for error in item.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </td>
+            <td>
+                {{ item.bookingType }}{{ ", " }}
+                {% if item.help_text %}
+                  <small style="color: grey">{{ item.help_text }}</small>
+                {% endif %}
+                {% for error in item.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </td>
+             <td>
+            <form action = "{% url 'home' %}" method = "POST">
+                {% csrf_token %}
+                <input type="submit" name="edit-form" formmethod="post" Value="Edit Booking">
+            </form>
+            </td>
+            <td>
+                <form action = "{% url 'home' %}" method = "POST">
+                    {% csrf_token %}
+                    <input type="submit" name="delete-booking" formmethod="post" Value="Delete Booking">
+                </form>
+            </td>
 
-{% block main %}
-    <h1>{% trans "My bookings" %}</h1>
-    <ul>
-        {% for booking in object_list %}
-            <li><a href="{% url "booking_detail" pk=booking.pk %}">{{ booking }}</a></li>
-        {% endfor %}
-    </ul>
+{% endfor %}
+        </tr>
+</table>
+</p>
 {% endblock %}

@@ -38,7 +38,7 @@ class User:
 
 
 class Customer(AbstractUser):
-    id= models.IntegerField(primary_key=True, unique=True)
+    id = models.IntegerField(primary_key=True, unique=True)
     email = models.EmailField(blank=False, unique=True)
     password = models.TextField(max_length=100, default="")
     first_name = models.CharField(blank=True, max_length=40)

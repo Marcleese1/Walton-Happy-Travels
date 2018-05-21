@@ -3,8 +3,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from users.models import Customer
 from django.contrib.auth import authenticate
-
-
+from django import template
+from.models import Bookings
+from django.shortcuts import render
+'''
 class BookingForm(forms.ModelForm):
     def __init__(self, session=None, user=None, *args, **kwargs):
         self.user = user
@@ -45,7 +47,14 @@ class BookingIDAuthenticationForm(AuthenticationForm):
                 raise forms.ValidationError(self.error_messages['inactive'])
             self.check_for_test_cookie()
             return self.cleaned_data
+'''
+register = template.Library()
 
+
+@register.simple_tag
+def booking_list(request):
+    bookings = Bookings.objects.all()
+    return render(request, 'bookings/bookings_list', {'bookings': bookings})
 
 
 #the form which allows the user to edit their details.

@@ -9,4 +9,3 @@ class NewPackageForm(UserCreationForm):
         model = Packages
         fields = ('destination', 'hotelName', 'price', 'duration')
 
-
