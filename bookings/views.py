@@ -39,3 +39,19 @@ def view_bookings(request):
     context = {"query_results": query_results}
     return render(request, 'bookings/bookings_list.html', context)
 
+
+def editbooking(request):
+    # allows the user to Edit their details
+    if request.method =='POST':
+        form = CustomerChangeFormAdmin(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CustomerChangeFormAdmin(instance=request.user)
+        args = {'form': form}
+        return render(request, 'editbooking.html', args)
+
+
+

@@ -7,17 +7,19 @@ from payments.models import Payment
 class Bookings(models.Model):
 
     user = models.ForeignKey('users.Customer', verbose_name='Customer', on_delete=models.CASCADE, default=True,
-                                 related_name='bookings')
+                             related_name='bookings')
     BookingId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bookingDate = models.DateTimeField(default=timezone.now)
     bookingType = models.CharField(blank=False, max_length=50)
     bookingPayment = models.IntegerField('Payment')
     bookingDeposit = models.IntegerField('Payment')
+    quantity = models.IntegerField(null=False, default="53")
 
 
 class BookingLine(models.Model):
-    BookingLineId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    departureDate = models.DateTimeField(timezone.now())
+    id = models.IntegerField(primary_key=True, default=1, editable=False)
+    BookingLineId = models.UUIDField(default=uuid.uuid4, editable=False)
+    departureDate = models.DateField(timezone.now)
 
 
 class Trip(models.Model):
