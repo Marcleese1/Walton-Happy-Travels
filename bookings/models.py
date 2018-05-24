@@ -13,13 +13,14 @@ class Bookings(models.Model):
     bookingType = models.CharField(blank=False, max_length=50)
     bookingPayment = models.IntegerField('Payment')
     bookingDeposit = models.IntegerField('Payment')
-    quantity = models.IntegerField(null=False, default="53")
 
 
 class BookingLine(models.Model):
     id = models.IntegerField(primary_key=True, default=1, editable=False)
     BookingLineId = models.UUIDField(default=uuid.uuid4, editable=False)
-    departureDate = models.DateField(timezone.now)
+    departure = models.ForeignKey('packages.Packages', verbose_name='departureDate',
+                                  on_delete=models.CASCADE,
+                                  default=True, related_name='Packages')
 
 
 class Trip(models.Model):

@@ -35,8 +35,12 @@ def edit(request):
 
 
 def view_bookings(request):
-    query_results = Bookings.objects.filter(user=request.user)
-    context = {"query_results": query_results}
+    if request.user.is_staff is True:
+        query_results = Bookings.objects.all()
+        context = {"query_results": query_results}
+    else:
+        query_results = Bookings.objects.filter(user=request.user)
+        context = {"query_results": query_results}
     return render(request, 'bookings/bookings_list.html', context)
 
 

@@ -44,7 +44,7 @@
                 {% endfor %}
             </td>
              <td>
-            <form action = "{% url 'editbooking' id=item.id %}" method = "POST">
+            <form action = "{% url 'editbookings'%}" method = "POST">
                 {% csrf_token %}
                 <input type="submit" name="edit-form" formmethod="post" Value="Edit Booking">
             </form>

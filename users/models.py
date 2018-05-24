@@ -52,6 +52,7 @@ class Customer(AbstractUser):
     postCode = models.CharField(blank=True, max_length=8)
     PhoneNumber = models.CharField(blank=True, max_length=15)
     homePhone = models.CharField(blank=True, max_length=15)
+    seatsChosen = models.IntegerField(default=1)
     username = None
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

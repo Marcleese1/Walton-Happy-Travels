@@ -1,0 +1,11 @@
+<!-- templates/choose Seats.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Choose your seat</h1>
+    <form action="" method="POST">
+        {{ form }}
+        {% csrf_token %}
+      <button class="btn btn-success ml-2" type="submit">Save</button>
+    </form>
+{% endblock %}

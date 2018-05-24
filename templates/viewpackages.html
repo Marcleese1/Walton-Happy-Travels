@@ -1,5 +1,7 @@
 <!-- template/post_list.html -->
 {% extends 'base.html' %}
+{% load i18n %}
+
 
 {% block title %}Packages{% endblock %}
 
@@ -11,12 +13,18 @@
       <p>{{ "Hotel Name: " }}{{ post.hotelName }}</p>
       <p>{{ "Duration: " }}{{ post.duration }}</p>
       <p>{{ "Price: £" }}{{ post.price }}{{ " PP" }}</p>
-      <p>{{ "Seats Available: " }}{{post.Quantity }}</p>
+      <p>{{ "Departure Date: " }}{{ post.departureDate }}</p>
+      <p>{{ "Seats Available: " }}{{post.quantity }}</p>
          {% if user.is_authenticated %}
-        <a href="{% url 'payment' %}">View Package</a>
+        <a href="{% url 'home'%}">choose seats</a>
+         {% elif item.Quantity == 0 %}
+             <a href>OUT OF STOCK</a>
          {% else %}
-        <a href="{% url 'login' %}">Buy</a>
+        <a href="{% url 'login' %}">choose seats</a>
          {% endif %}
+      {% if user.is_staff %}
+      <a href="{% url 'home' %}">Edit Package</a>
+      {% endif %}
       </div>
     </div>
     <br />

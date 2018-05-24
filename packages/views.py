@@ -17,10 +17,16 @@ class ViewPackages(ListView):
     template_name = 'viewpackages.html'
 
 
+#def chooseSeats(request, id):
+
+
+
+
+
 class PackageCreateView(LoginRequiredMixin, CreateView):
     model = models.Packages
     template_name = 'package_new.html'
-    fields = ['destination', 'hotelName', 'duration', 'price']
+    fields = ['destination', 'hotelName', 'departureDate', 'duration', 'price']
     success_url = reverse_lazy('home')
 
 
@@ -29,7 +35,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # function used for the checkout this funtction creates the booking ID the Date and how much is costs.
 def checkout(request):
-    new_booking = Bookings(
+    new_booking = request.session['Bookings'](
         customer_id=Customer.id,
         bookingDate=timezone.now,
         bookingType="Coach",
@@ -55,7 +61,7 @@ def checkout(request):
 
 
 def payment_form(request):
-
+    #newbooking1 =
     context = {"stripe_key": settings.STRIPE_PUBLIC_KEY}
     return render(request, "Payment.html", context)
 
