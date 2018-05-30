@@ -4,8 +4,8 @@
 {% block content %}
     <h1>Choose your seat</h1>
     <form action="" method="POST">
-        {{ form }}
+        {{ "please choose the number of seats you would like. " }}{{ form.as_p}}
         {% csrf_token %}
-      <button class="btn btn-success ml-2" type="submit">Save</button>
+      <button class="btn btn-success ml-2" type="submit">Buy</button>
     </form>
 {% endblock %}

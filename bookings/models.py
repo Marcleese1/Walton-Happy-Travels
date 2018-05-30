@@ -8,11 +8,13 @@ class Bookings(models.Model):
 
     user = models.ForeignKey('users.Customer', verbose_name='Customer', on_delete=models.CASCADE, default=True,
                              related_name='bookings')
+    id = models.IntegerField(unique=True, editable=False)
     BookingId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bookingDate = models.DateTimeField(default=timezone.now)
     bookingType = models.CharField(blank=False, max_length=50)
     bookingPayment = models.IntegerField('Payment')
     bookingDeposit = models.IntegerField('Payment')
+    seatsChosen = models.IntegerField(default=0)
 
 
 class BookingLine(models.Model):

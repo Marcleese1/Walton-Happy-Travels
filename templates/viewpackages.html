@@ -14,16 +14,17 @@
       <p>{{ "Duration: " }}{{ post.duration }}</p>
       <p>{{ "Price: £" }}{{ post.price }}{{ " PP" }}</p>
       <p>{{ "Departure Date: " }}{{ post.departureDate }}</p>
+      <p>{{ "Leaving Time: " }}{{ post.leavingTime }}</p>
       <p>{{ "Seats Available: " }}{{post.quantity }}</p>
          {% if user.is_authenticated %}
-        <a href="{% url 'home'%}">choose seats</a>
-         {% elif item.Quantity == 0 %}
+        <a href="{% url 'chooseSeats' post.pk%}">choose seats</a>
+         {% elif item.quantity <= 0 %}
              <a href>OUT OF STOCK</a>
          {% else %}
         <a href="{% url 'login' %}">choose seats</a>
          {% endif %}
       {% if user.is_staff %}
-      <a href="{% url 'home' %}">Edit Package</a>
+      <a href="{% url 'EditPackage' post.pk%}">Edit Package</a>
       {% endif %}
       </div>
     </div>

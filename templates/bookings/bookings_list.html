@@ -13,6 +13,7 @@
             <th><h3>User, </h3></th>
             <th><h3>Date Booked, </h3></th>
             <th><h3>Booking Type, </h3></th>
+            <th><h3>Seats Chosen, </h3></th>
         </tr>
  {% for item in query_results %}
         <tr>
@@ -43,8 +44,17 @@
                   <p style="color: red">{{ error }}</p>
                 {% endfor %}
             </td>
+            <td>
+                {{ item.seatsChosen }}{{ ", " }}
+                {% if item.help_text %}
+                  <small style="color: grey">{{ item.help_text }}</small>
+                {% endif %}
+                {% for error in item.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </td>
              <td>
-            <form action = "{% url 'editbookings'%}" method = "POST">
+            <form action = "{% url 'editbookings' post.pk%}" method = "POST">
                 {% csrf_token %}
                 <input type="submit" name="edit-form" formmethod="post" Value="Edit Booking">
             </form>

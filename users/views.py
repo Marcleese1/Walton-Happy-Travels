@@ -34,3 +34,5 @@ def edit(request):
         form = CustomerChangeFormAdmin(instance=request.user)
         args = {'form': form}
         return render(request, 'editdetails.html', args)
+
+
