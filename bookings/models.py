@@ -12,9 +12,9 @@ class Bookings(models.Model):
     BookingId = models.UUIDField(default=uuid.uuid4, editable=False)
     bookingDate = models.DateTimeField(default=timezone.now)
     bookingType = models.CharField(blank=False, max_length=50)
-    bookingPayment = models.IntegerField('Payment')
-    bookingDeposit = models.IntegerField('Payment', default=0)
-    seatsChosen = models.IntegerField(default=0)
+    bookingPayment = models.PositiveIntegerField('Payment')
+    bookingDeposit = models.PositiveIntegerField('Payment', default=0)
+    seatsChosen = models.PositiveIntegerField(default=1)
 
 
 class BookingLine(models.Model):

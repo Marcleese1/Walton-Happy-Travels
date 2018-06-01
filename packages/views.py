@@ -10,7 +10,8 @@ from django.urls import reverse_lazy
 from .forms import ChooseSeatsForm
 import json
 from django.http import HttpResponse
-
+from django.contrib import messages
+from django.core.mail import send_mail
 
 class ViewPackages(ListView):
     model = models.Packages
@@ -29,6 +30,7 @@ class ChooseSeats(UpdateView, LoginRequiredMixin):
         destination = form.instance.destination
         hotel = form.instance.hotelName
         duration = form.instance.duration
+        departure = str(form.instance.departureDate)
         id = form.instance.id
         type = form.instance.type
         form.instance.quantity -= form.cleaned_data['seatsChosen']
@@ -39,6 +41,7 @@ class ChooseSeats(UpdateView, LoginRequiredMixin):
         self.request.session['duration'] = duration
         self.request.session['type'] = type
         self.request.session['id'] = id
+        self.request.session['departureDate'] = departure
         form.instance.save()
         return redirect('payment')
 
@@ -66,14 +69,16 @@ def checkout(request):
     new_booking = Bookings(
         bookingType=request.session['type'],
         seatsChosen=request.session['seatsChosen'],
-        bookingPayment=request.session['amount']
+        bookingPayment=request.session['amount'],
+        user=request.user,
 
     )
     trip = Trip(
         destination=request.session['destination'],
         duration=request.session['duration'],
         price=request.session['price'],
-        hotelName=request.session['hotelName']
+        hotelName=request.session['hotelName'],
+        totalCost=request.session['amount']
     )
     if request.method =="POST":
         token = request.POST.get("stripeToken")
@@ -89,8 +94,21 @@ def checkout(request):
     except stripe.error.CardError as ce:
         return False, ce
     else:
-        new_booking.save()
-        trip.save()
+        new_booking.save() and trip.save()
+
+        send_mail(
+            'Walton Happy Travels Package Booking',
+            'Thank you '+request.user.email+' for Booking with Walton Happy Travels. Please find below the '+
+            'details of your Booking'+"\n"+
+            'Details:' +"\n"+ 'destination: '+ str(request.session['destination'])+"\n"+ 'duration: '
+            + str(request.session['duration']) + ' Days' + "\n" + 'Departure Date: ' +
+            str(request.session['departureDate']) + "\n" + 'Hotel Name: ' + str(request.session['hotelName']) +"\n"+
+            'Number of People: ' + str(request.session['seatsChosen']) + "\n" + 'Total Cost: £'
+            + request.session['amount'][:-2], 'WaltonHappyTravels@gmail.com',
+            ['marcleesewalton@gmail.com'],
+            fail_silently=False
+        )
+
         return redirect("home")
 
 
@@ -109,15 +127,8 @@ def payment_form(request):
 
 
 #allows the user to delete their Bookings
-#class Delete_Booking(DeleteView, LoginRequiredMixin):
- #   form_class = ChooseSeatsForm
-  #  model = Bookings
-   # queryset = models.Bookings.objects.all()
-    #def addquantity(self):
-     #   Package = self.request.session['id']
-      #  self.request.GET.get(Package)
-       # form.instance.quantity += self.request.cleaned_data['seatsChosen']
-        #form.instance.save()
-        #return redirect('bookings_list')
-
-    #success_url = reverse_lazy('bookings_list')
+class Delete_Booking(DeleteView, LoginRequiredMixin):
+    form_class = ChooseSeatsForm
+    model = Bookings
+    queryset = models.Bookings.objects.all()
+    success_url = reverse_lazy('bookings_list')

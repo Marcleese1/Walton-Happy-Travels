@@ -40,15 +40,7 @@ class EditBooking(UpdateView, LoginRequiredMixin):
     success_url = reverse_lazy('bookings_list')
 
 
-#allows the user to delete their account
-#class delete_booking(DeleteView):
- #   model = Bookings
-  #  queryset = models.Bookings.objects.all()
 
-   # def addquantity(self, form: ChooseSeatsForm):
-    #    form.cleaned_data['quantity'] += form.instance.seatsChosen
-     #   form.instance.save()
-      #  return redirect('bookings_list')
 
 
 

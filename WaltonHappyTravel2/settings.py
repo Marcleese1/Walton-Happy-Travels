@@ -30,6 +30,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'marcleesewalton@gmail.com'
+EMAIL_HOST_PASSWORD = 'Warcreator745!'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+
+'''https://accounts.google.com/displayunlockcaptcha'''
 
 # Application definition
 
