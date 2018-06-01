@@ -41,14 +41,14 @@ class EditBooking(UpdateView, LoginRequiredMixin):
 
 
 #allows the user to delete their account
-class delete_booking(DeleteView):
-    model = Bookings
-    queryset = models.Bookings.objects.all()
+#class delete_booking(DeleteView):
+ #   model = Bookings
+  #  queryset = models.Bookings.objects.all()
 
-    def addquantity(self, form: ChooseSeatsForm):
-        form.cleaned_data['quantity'] += form.instance.seatsChosen
-        form.instance.save()
-        return redirect('bookings_list')
+   # def addquantity(self, form: ChooseSeatsForm):
+    #    form.cleaned_data['quantity'] += form.instance.seatsChosen
+     #   form.instance.save()
+      #  return redirect('bookings_list')
 
 
 

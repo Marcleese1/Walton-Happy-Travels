@@ -17,16 +17,19 @@ class ViewPackages(ListView):
     template_name = 'viewpackages.html'
 
 
+#the function used by the customer to choose the amount of people that will be going on the trip
 class ChooseSeats(UpdateView, LoginRequiredMixin):
     form_class = ChooseSeatsForm
     queryset = models.Packages.objects.all()
-
+    #this function will remove the amount of seats chosen from the quantity of the package
+    #it will then create a whole bunch of session variables to be used in the checkout
     def form_valid(self, form: ChooseSeatsForm):
         price = form.instance.price
         seatschosen = form.cleaned_data['seatsChosen']
         destination = form.instance.destination
         hotel = form.instance.hotelName
         duration = form.instance.duration
+        id = form.instance.id
         type = form.instance.type
         form.instance.quantity -= form.cleaned_data['seatsChosen']
         self.request.session['seatsChosen'] = seatschosen
@@ -35,6 +38,7 @@ class ChooseSeats(UpdateView, LoginRequiredMixin):
         self.request.session['hotelName'] = hotel
         self.request.session['duration'] = duration
         self.request.session['type'] = type
+        self.request.session['id'] = id
         form.instance.save()
         return redirect('payment')
 
@@ -90,6 +94,8 @@ def checkout(request):
         return redirect("home")
 
 
+#the payment for that initiates stripe and creates the sessions for seats chosen, price
+#and then works out the amount the customer will have to pay for the booking
 def payment_form(request):
     seats = request.session['seatsChosen']
     price = request.session['price']
@@ -101,12 +107,17 @@ def payment_form(request):
     context = {"stripe_key": settings.STRIPE_PUBLIC_KEY }
     return render(request, "Payment.html", context)
 
-#allows the user to delete their account
-class delete_booking(DeleteView):
-    model = Bookings
-    queryset = models.Bookings.objects.all()
 
-    def addquantity(self, form: ChooseSeatsForm):
-        form.instance.quantity += form.cleaned_data['seatsChosen']
-        form.instance.save()
-        return redirect('bookings_list')
+#allows the user to delete their Bookings
+#class Delete_Booking(DeleteView, LoginRequiredMixin):
+ #   form_class = ChooseSeatsForm
+  #  model = Bookings
+   # queryset = models.Bookings.objects.all()
+    #def addquantity(self):
+     #   Package = self.request.session['id']
+      #  self.request.GET.get(Package)
+       # form.instance.quantity += self.request.cleaned_data['seatsChosen']
+        #form.instance.save()
+        #return redirect('bookings_list')
+
+    #success_url = reverse_lazy('bookings_list')
