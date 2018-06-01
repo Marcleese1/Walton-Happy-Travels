@@ -9,7 +9,7 @@ from bookings.models import Bookings
 class NewPackageForm(UserCreationForm):
     class Meta:
         model = Packages
-        fields = ('destination', 'hotelName', 'price', 'departureDate', 'leavingTime', 'duration', 'quantity')
+        fields = ('destination', 'hotelName', 'price', 'departureDate', 'leavingTime', 'duration', 'quantity', 'type')
 
     def __init__(self, *args, **kwargs):
         super(NewPackageForm, self).__init__(*args, **kwargs)
@@ -19,7 +19,7 @@ class NewPackageForm(UserCreationForm):
 class ChooseSeatsForm(forms.ModelForm):
     class Meta:
         model = Bookings
-        fields = ('seatsChosen',)
+        fields = ('seatsChosen', )
 
 
 class EditPackageForm(forms.ModelForm):

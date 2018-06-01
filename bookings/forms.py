@@ -14,7 +14,13 @@ class BookingsChangeFormAdmin(forms.ModelForm):
         fields = ('user', 'bookingDate', 'bookingPayment', 'bookingType', 'bookingDeposit', 'seatsChosen' )
 
 
-class EditPackageForm(forms.ModelForm):
+class EditBookingForm(forms.ModelForm):
     class Meta:
-        mode = Bookings
-        fields = 'seatsChosen'
+        model = Bookings
+        fields = ('seatsChosen', )
+
+
+class ChooseSeatsForm(forms.ModelForm):
+    class Meta:
+        model = Bookings
+        fields = ('seatsChosen', )

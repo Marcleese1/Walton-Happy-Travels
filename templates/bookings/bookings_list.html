@@ -54,13 +54,13 @@
                 {% endfor %}
             </td>
              <td>
-            <form action = "{% url 'editbookings' post.pk%}" method = "POST">
+            <form action = "{% url 'view_bookings' item.id%}" method = "POST">
                 {% csrf_token %}
                 <input type="submit" name="edit-form" formmethod="post" Value="Edit Booking">
             </form>
             </td>
             <td>
-                <form action = "{% url 'home' %}" method = "POST">
+                <form action = "{% url 'delete_booking' item.id %}" method = "POST">
                     {% csrf_token %}
                     <input type="submit" name="delete-booking" formmethod="post" Value="Delete Booking">
                 </form>

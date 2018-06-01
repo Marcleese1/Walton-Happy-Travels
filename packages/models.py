@@ -6,7 +6,7 @@ from django.db.models import F
 
 
 class Packages(models.Model):
-    id = models.CharField(primary_key=True, editable=False, unique=True, max_length=150)
+    id = models.IntegerField(primary_key=True, editable=False, unique=True)
     destination = models.CharField(max_length=200)
     hotelName = models.CharField(max_length=100)
     duration = models.CharField(max_length=100)
@@ -14,6 +14,6 @@ class Packages(models.Model):
     quantity = models.IntegerField(default="53")
     departureDate = models.DateField(default=timezone.now)
     leavingTime = models.TimeField(default=timezone.now)
-   # charge_id = models.CharField(max_length=234)
+    type = models.CharField(max_length=100, default="Coach")
 
 
