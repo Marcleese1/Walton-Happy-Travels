@@ -2,7 +2,7 @@
 {% load i18n %}
 <h2>Deactivate your account</h2>
 <hr>
-<form action="." method="POST" class="padding">{% csrf_token %}
+<form action="../accounts" method="POST" class="padding">{% csrf_token %}
     {{ form.as_p }}
     {{ user.email }}
     {{ user.id }}

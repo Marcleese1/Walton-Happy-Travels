@@ -4,6 +4,8 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from .forms import UserCustomerForm, UserChangeForm, CustomerChangeFormAdmin
 from django.contrib.auth import login, logout
+from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponse
 
 version=__import__('social_auth').__version__
 
@@ -33,6 +35,17 @@ def edit(request):
     else:
         form = CustomerChangeFormAdmin(instance=request.user)
         args = {'form': form}
-        return render(request, 'editdetails.html', args)
+        return render(request, 'registration/editdetails.html', args)
 
 
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('editdetails')
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    return render(request, 'password.html', {'form': form})

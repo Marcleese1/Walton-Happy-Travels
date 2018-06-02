@@ -1,10 +1,11 @@
 # users/urls.py
 from django.urls import path
 from . import views
-from .views import edit, delete_account
+from .views import edit, delete_account, change_password
 
 urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
     path('editdetails/', edit, name='editdetails'),
-    path('delete_user/', delete_account, name='deleteUser')
+    path('delete_user/', delete_account, name='deleteUser'),
+    path('password/', change_password, name='changepassword')
 ]

@@ -49,10 +49,14 @@ class UserCustomerForm(UserCreationForm):
                   'PhoneNumber')
 
 
+# the form used for the edit customer view
+# this is an override in it bringing in all of the information in the customer database
 class CustomerChangeFormAdmin(UserChangeForm):
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = 'email', 'first_name', 'last_name', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', \
+                 'PhoneNumber', 'homePhone'
+        exclude = ('password', 'password')
 
     def init(self, args, **kwargs):
         super(UserChangeForm, self).init(args, **kwargs)
