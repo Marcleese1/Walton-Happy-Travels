@@ -1,11 +1,8 @@
-# users/forms.py
+# bookings/forms.py
+import datetime
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
-from users.models import Customer
-from django.contrib.auth import authenticate
-from django import template
 from.models import Bookings
-from django.shortcuts import render
+from packages.models import Packages
 
 
 class BookingsChangeFormAdmin(forms.ModelForm):
@@ -24,3 +21,12 @@ class ChooseSeatsForm(forms.ModelForm):
     class Meta:
         model = Bookings
         fields = ('seatsChosen', )
+
+
+class GenerateReport(forms.ModelForm):
+    Start = forms.DateField(widget=forms.SelectDateWidget, initial=datetime.date.today())
+    End = forms.DateField(widget=forms.SelectDateWidget, initial=datetime.date.today())
+
+    class Meta:
+        model = Bookings
+        fields = ('bookingDate', )

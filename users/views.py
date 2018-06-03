@@ -1,11 +1,17 @@
 # users/views.py
 from django.urls import reverse_lazy, reverse
 from django.views import generic
+from WaltonHappyTravel2 import settings
+import urllib
+import json
 from django.shortcuts import render, redirect
 from .forms import UserCustomerForm, UserChangeForm, CustomerChangeFormAdmin
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
+from django.contrib import messages
+from .utils import human_required
+from.models import Customer
 
 version=__import__('social_auth').__version__
 
@@ -21,6 +27,7 @@ def delete_account(request):
     cust = request.user
     cust.delete()
     logout(request)
+    messages.add_message(request, messages.INFO, 'Customer successfully deleted')
     return render(request, 'home.html')
 
 
@@ -44,8 +51,9 @@ def change_password(request):
 
         if form.is_valid():
             form.save()
-            return redirect('editdetails')
+            return redirect('login')
     else:
         form = PasswordChangeForm(user=request.user)
 
     return render(request, 'password.html', {'form': form})
+

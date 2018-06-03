@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Customer
 from django.shortcuts import render
 from django.http import HttpResponse, response
-
+from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 class CustomerCreationFormAdmin(UserCreationForm):
     error_messages = {
@@ -46,7 +46,7 @@ class UserCustomerForm(UserCreationForm):
                   'town',
                   'postCode',
                   'homePhone',
-                  'PhoneNumber')
+                  'PhoneNumber',)
 
 
 # the form used for the edit customer view
@@ -54,9 +54,8 @@ class UserCustomerForm(UserCreationForm):
 class CustomerChangeFormAdmin(UserChangeForm):
     class Meta:
         model = Customer
-        fields = 'email', 'first_name', 'last_name', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode', \
-                 'PhoneNumber', 'homePhone'
-        exclude = ('password', 'password')
+        fields = ('email', 'first_name', 'last_name', 'Address_Line_1', 'Address_Line_2', 'town', 'postCode',
+                  'PhoneNumber', 'homePhone')
 
     def init(self, args, **kwargs):
         super(UserChangeForm, self).init(args, **kwargs)

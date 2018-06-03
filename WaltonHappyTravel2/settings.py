@@ -14,7 +14,7 @@ import os
 
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_SECRET_KEY", "pk_test_xODHdaU2iyDQOXHZskbAC47s")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_QzgUSPfkhpfLey51vqStbfXg")
-
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LcI-1wUAAAAAC0QQ62ywvkK-6baWvDt2WjG0OD2'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'bookings',
     'payments',
     'packages',
+    'xlwt',
+    'nocaptcha_recaptcha'
+
 ]
 
 MIDDLEWARE = [

@@ -6,6 +6,7 @@
 {% block title %}Packages{% endblock %}
 
 {% block content %}
+    <h1>Packages</h1>
   {% for post in object_list %}
     <div class="card">
      <span class="font-weight-bold">{{ "Destination: " }}{{ post.destination }}</span>
@@ -22,10 +23,11 @@
          {% elif item.quantity <= 0 %}
              <a href>OUT OF STOCK</a>
          {% else %}
-        <a href="{% url 'login' %}">choose seats</a>
+        <a href="{% url 'login' %}">choose seats|</a>
          {% endif %}
       {% if user.is_staff %}
-      <a href="{% url 'EditPackage' post.pk%}">Edit Package</a>
+      <a href="{% url 'EditPackage' post.pk%}">|Edit Package|</a>
+      <a href="{% url 'DeletePackage' post.pk%}">|Delete Package</a>
       {% endif %}
       </div>
     </div>

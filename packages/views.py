@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DeleteView
 from . import models
+from .models import Packages
 from django.views.generic.edit import CreateView, UpdateView
 import stripe
 from WaltonHappyTravel2 import settings
@@ -31,9 +32,11 @@ class ChooseSeats(UpdateView, LoginRequiredMixin):
         hotel = form.instance.hotelName
         duration = form.instance.duration
         departure = str(form.instance.departureDate)
+        quan = form.instance.quantity
         id = form.instance.id
         type = form.instance.type
-        form.instance.quantity -= form.cleaned_data['seatsChosen']
+        quan -= form.cleaned_data['seatsChosen']
+        self.request.session['quantity'] = quan
         self.request.session['seatsChosen'] = seatschosen
         self.request.session['price'] = price
         self.request.session['destination'] = destination
@@ -132,3 +135,8 @@ class Delete_Booking(DeleteView, LoginRequiredMixin):
     model = Bookings
     queryset = models.Bookings.objects.all()
     success_url = reverse_lazy('bookings_list')
+
+class Delete_package(DeleteView, LoginRequiredMixin):
+    model = Packages
+    queryset = Packages.objects.all()
+    success_url = reverse_lazy('viewpackages')
