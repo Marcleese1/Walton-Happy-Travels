@@ -6,6 +6,7 @@ from .forms import CustomerCreationFormAdmin, CustomerChangeFormAdmin
 from .models import Customer
 
 
+#USED TO DISPLAY THE CUSTOMER INFORMATION ON THE ADMIN PAGE USING THE CUSTOM FORM
 class CustomUserAdmin(UserAdmin):
     add_form = CustomerCreationFormAdmin
     form = CustomerChangeFormAdmin

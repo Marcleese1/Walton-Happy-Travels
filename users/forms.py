@@ -2,10 +2,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Customer
-from django.shortcuts import render
-from django.http import HttpResponse, response
-from nocaptcha_recaptcha.fields import NoReCaptchaField
+from django.forms import ValidationError
 
+
+# THE FORM TO CREATE A CUSTOMER
 class CustomerCreationFormAdmin(UserCreationForm):
     error_messages = {
         'password_mismatch': "The two password fields didn't match.",
@@ -26,6 +26,7 @@ class CustomerCreationFormAdmin(UserCreationForm):
         return customer
 
 
+#THE FORM USED TO CREATE GENERAL USERS
 class UserCustomerForm(UserCreationForm):
     error_messages = {
         'password_mismatch': "The two password fields didn't match.",
@@ -47,6 +48,13 @@ class UserCustomerForm(UserCreationForm):
                   'postCode',
                   'homePhone',
                   'PhoneNumber',)
+
+    def save(self, commit=True):
+        customer = super(UserCreationForm, self).save(commit=False)
+        customer.set_password(self.cleaned_data["password1"])
+        if commit:
+            customer.save()
+        return customer
 
 
 # the form used for the edit customer view
@@ -77,7 +85,6 @@ class DeactivateUserForm(forms.ModelForm):
     def clean_is_active(self):
         is_active = not(self.cleaned_data["is_active"])
         return is_active
-
 
 
 

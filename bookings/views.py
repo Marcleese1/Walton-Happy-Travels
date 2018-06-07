@@ -1,6 +1,7 @@
 from .forms import EditBookingForm
 from datetime import datetime, timedelta
 import datetime
+
 import xlwt
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
@@ -12,6 +13,7 @@ from.models import Bookings
 from. import models
 from .forms import GenerateReport
 from packages.models import Packages
+
 
 #displays the homepage
 class HomePageView(TemplateView):
@@ -42,35 +44,6 @@ class EditBooking(UpdateView, LoginRequiredMixin):
     form_class = EditBookingForm
     success_url = reverse_lazy('bookings_list')
 
-
-def booking_report(request):
-    booking_date = request.session['bookingDate']
-    booking_set = Bookings.objects.filter(bookingDate=booking_date)
-    print(booking_date)
-    print(booking_set)
-    wb = xlwt.Workbook()
-    ws = wb.add_sheet('occupancy from ' + str(booking_date))
-    ws.write(0, 0, 'booking id')
-    ws.write(0, 1, 'customer')
-    ws.write(0, 2, 'date')
-    ws.write(0, 3, 'length')
-    ws.write(0, 4, 'date created')
-    test = 0
-    for i, booking in enumerate(booking_set):
-        ws.write(i + 1, 0, str(Bookings.id))
-        ws.write(i + 1, 2, str(Bookings.BookingId))
-        ws.write(i + 1, 1, str(Bookings.user))
-        ws.write(i + 1, 3, str(Bookings.bookingDate))
-        ws.write(i + 1, 4, str(Bookings.bookingType))
-        ws.write(i + 1, 5, str(Bookings.bookingPayment))
-        ws.write(i + 1, 6, str(Bookings.seatsChosen))
-        test = i
-    ws.write(test + 2, 0, str(booking_set.count()))
-    wb.save('C:/Users\Marc\Desktop\django_reports' + 'occupancy ' + 'date'
-            + str(booking_date) + '.xls')
-    del request.session['bookingDate']
-    del request.session['occupancy']
-    return
 
 
 

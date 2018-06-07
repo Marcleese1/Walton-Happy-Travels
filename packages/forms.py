@@ -6,6 +6,7 @@ from django.contrib.admin import widgets
 from bookings.models import Bookings
 
 
+#FORM TO MAKE A NEW PACKAGE
 class NewPackageForm(UserCreationForm):
     class Meta:
         model = Packages
@@ -16,12 +17,14 @@ class NewPackageForm(UserCreationForm):
         self.fields['departureDate'].widget = widgets.AdminDateWidget()
 
 
+#FORM TO CHOOSE THE SEATS
 class ChooseSeatsForm(forms.ModelForm):
     class Meta:
         model = Bookings
         fields = ('seatsChosen', )
 
 
+#FORM TO DISPLAY THE ITEMS IN EDIT PACKAGE
 class EditPackageForm(forms.ModelForm):
     class Meta:
         model=Packages

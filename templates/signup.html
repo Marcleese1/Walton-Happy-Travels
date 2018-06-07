@@ -5,6 +5,7 @@
 
 {% block content %}
   <h2>Sign up</h2>
+
   <form method="Post">
     {% csrf_token %}
       {% for field in form %}

@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.core.mail import send_mail
 
+
 class ViewPackages(ListView):
     model = models.Packages
     template_name = 'viewpackages.html'
@@ -32,11 +33,9 @@ class ChooseSeats(UpdateView, LoginRequiredMixin):
         hotel = form.instance.hotelName
         duration = form.instance.duration
         departure = str(form.instance.departureDate)
-        quan = form.instance.quantity
         id = form.instance.id
         type = form.instance.type
-        quan -= form.cleaned_data['seatsChosen']
-        self.request.session['quantity'] = quan
+        form.instance.quantity -= form.cleaned_data['seatsChosen']
         self.request.session['seatsChosen'] = seatschosen
         self.request.session['price'] = price
         self.request.session['destination'] = destination
@@ -60,7 +59,7 @@ class PackageCreateView(LoginRequiredMixin, CreateView):
     model = models.Packages
     template_name = 'package_new.html'
     fields = ['destination', 'hotelName', 'departureDate', 'leavingTime', 'duration', 'price']
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('viewpackages')
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -136,6 +135,8 @@ class Delete_Booking(DeleteView, LoginRequiredMixin):
     queryset = models.Bookings.objects.all()
     success_url = reverse_lazy('bookings_list')
 
+
+#ALLOWS STAFF TO DELETE PACKAGES
 class Delete_package(DeleteView, LoginRequiredMixin):
     model = Packages
     queryset = Packages.objects.all()

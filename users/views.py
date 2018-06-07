@@ -1,25 +1,20 @@
 # users/views.py
-from django.urls import reverse_lazy, reverse
-from django.views import generic
-from WaltonHappyTravel2 import settings
-import urllib
-import json
 from django.shortcuts import render, redirect
-from .forms import UserCustomerForm, UserChangeForm, CustomerChangeFormAdmin
+from .forms import UserCustomerForm, CustomerChangeFormAdmin
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponse
 from django.contrib import messages
-from .utils import human_required
-from.models import Customer
+from django.views.generic.edit import CreateView
 
 version=__import__('social_auth').__version__
 
 
-class SignUp(generic.CreateView):
+#sign up page for the user
+class SignUp(CreateView):
     form_class = UserCustomerForm
-    success_url = reverse_lazy('login')
     template_name = 'signup.html'
+    success_url = 'login'
+
 
 
 #allows the user to delete their account
@@ -33,7 +28,7 @@ def delete_account(request):
 
 def edit(request):
     # allows the user to Edit their details
-    if request.method =='POST':
+    if request.method == 'POST':
         form = CustomerChangeFormAdmin(request.POST, instance=request.user)
 
         if form.is_valid():
@@ -45,6 +40,7 @@ def edit(request):
         return render(request, 'registration/editdetails.html', args)
 
 
+#allows the customer to change their password
 def change_password(request):
     if request.method == "POST":
         form = PasswordChangeForm(data=request.POST, user=request.user)

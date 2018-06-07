@@ -4,6 +4,8 @@ from . import views
 from. import models
 from .models import Packages
 from .views import ChooseSeats, EditPackage, checkout, payment_form, Delete_Booking, Delete_package
+
+#URLS FOR PACKAGE APP
 urlpatterns = [
     path('', views.ViewPackages.as_view(), name='viewpackages'),
     path('checkout/', checkout, name="checkout"),

@@ -1,8 +1,10 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from bookings.models import Bookings
+import localflavor
 
 
+#Allows the permissions to be set depending on the rank of the user
 class Manager(BaseUserManager):
     use_in_migrations = True
 
@@ -37,21 +39,22 @@ class User:
     bookingList = [Bookings]
 
 
+#used to sotre the information the customer will enter
 class Customer(AbstractUser):
     id = models.IntegerField(primary_key=True, unique=True)
     email = models.EmailField(blank=False, unique=True)
     password = models.TextField(max_length=100, default="")
-    first_name = models.CharField(blank=True, max_length=40)
-    last_name = models.CharField(blank=True, max_length=40)
+    first_name = models.CharField(blank=False, max_length=40)
+    last_name = models.CharField(blank=False, max_length=40)
     is_staff = models.BooleanField(
         default=False,
         help_text='Designates whether the user can log into this site.')
-    Address_Line_1 = models.CharField(blank=True, max_length=255)
-    Address_Line_2 = models.CharField(blank=True, max_length=255)
-    town = models.CharField(blank=True, max_length=50)
-    postCode = models.CharField(blank=True, max_length=8)
-    PhoneNumber = models.CharField(blank=True, max_length=15)
-    homePhone = models.CharField(blank=True, max_length=15)
+    Address_Line_1 = models.CharField(blank=False, max_length=255)
+    Address_Line_2 = models.CharField(blank=False, max_length=255)
+    town = models.CharField(blank=False, max_length=50)
+    postCode = models.CharField(blank=False, max_length=8)
+    PhoneNumber = models.CharField(blank=False, max_length=15)
+    homePhone = models.CharField(blank=False, max_length=15)
     username = None
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -60,3 +63,4 @@ class Customer(AbstractUser):
 
     def get_username(self):
         return self.email
+
