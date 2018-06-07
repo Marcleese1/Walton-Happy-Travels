@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.views.generic.edit import CreateView
-
+from django.urls import reverse_lazy
 version=__import__('social_auth').__version__
 
 
@@ -13,8 +13,7 @@ version=__import__('social_auth').__version__
 class SignUp(CreateView):
     form_class = UserCustomerForm
     template_name = 'signup.html'
-    success_url = 'login'
-
+    success_url = reverse_lazy('login')
 
 
 #allows the user to delete their account

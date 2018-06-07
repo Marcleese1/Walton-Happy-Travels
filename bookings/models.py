@@ -4,6 +4,7 @@ from django.utils import timezone
 from payments.models import Payment
 import datetime
 
+
 #MODEL FOR HOLDING BOOKING INFORMATION
 class Bookings(models.Model):
 

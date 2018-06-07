@@ -11,7 +11,6 @@ from users.models import Customer
 from django.shortcuts import render, redirect
 from.models import Bookings
 from. import models
-from .forms import GenerateReport
 from packages.models import Packages
 
 
